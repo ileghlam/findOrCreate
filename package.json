@@ -23,7 +23,8 @@
   ],
   "author": "Ishak Leghlam <ileghlam@student.42.fr> (https://github.com/ileghlam)",
   "contributors": [
-    "Raphael Le Minor <rle-mino@student.42.fr> (https://github.com/rle-mino)"
+    "Raphael Le Minor <rle-mino@student.42.fr> (https://github.com/rle-mino)",
+    "Zakaria Kerkeb <zkerkeb@student.42.fr> (https://github.com/hikkary)"
   ],
   "license": "MIT",
   "bugs": {
@@ -32,9 +33,12 @@
   "engines": {
     "node": "~0.6.14"
   },
-  "dependencies": {},
+  "dependencies": {
+    "mongoose": "^4.8.1"
+  },
   "devDependencies": {
-    "mocha": "",
-    "should": ""
+    "chai": "^3.5.0",
+    "dotenv": "^4.0.0",
+    "mocha": "^3.2.0"
   }
 }
