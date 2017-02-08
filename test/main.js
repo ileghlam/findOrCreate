@@ -1,7 +1,6 @@
 import chai from 'chai';
 /* --------------------------------------------Require------------------------------------------ */
 import mongoose from 'mongoose';
-import assert from 'assert';
 import findOrCreate from '../lib/main';
 
 /* --------------------------------------------Init Schema-------------------------------------- */
@@ -16,35 +15,42 @@ const testSchema = new Schema({
 
 testSchema.plugin(findOrCreate);
 
-const test = mongoose.model('test', testSchema);
+const Test = mongoose.model('test', testSchema);
 
 /* --------------------------------------Connect to database------------------------------------ */
 mongoose.connect('mongodb://82.196.14.126:27017/crypta');
-// mongoose.connection.on('connected', function () {  
+// mongoose.connection.on('connected', function () {
 //     console.log('Mongoose default connection open to ' + 'mongodb://82.196.14.126:27017/crypta');
-// }); 
+// });
 
 // // If the connection throws an error
-// mongoose.connection.on('error',function (err) {  
+// mongoose.connection.on('error',function (err) {
 //     console.log('Mongoose default connection error: ' + err);
-// }); 
+// });
 
 // // When the connection is disconnected
-// mongoose.connection.on('disconnected', function () {  
-//     console.log('Mongoose default connection disconnected'); 
+// mongoose.connection.on('disconnected', function () {
+//     console.log('Mongoose default connection disconnected');
 // });
 
 /* ------------------------------------------START TEST----------------------------------------- */
 describe('#findOrCreate()', () => {
-
     before((done) => {
-        const grapefruit = new test({
-            name: 'Grapefruit',
+        const test = new Test({
+            name: 'test',
         });
-        grapefruit.save(err => done())
+        test.save(err => done());
     });
 
-    it('the static method findOrCreate is added to models', () => {
-        expect(typeof test.findOrCreate).to.equal('function');
+    it('should add method findOrCreate to models', () => {
+        expect(typeof Test.findOrCreate).to.equal('function');
     });
+
+    it('should ')
 });
+
+/* ----------------------------------------Delete Database-------------------------------------- */
+// after(done => {
+//   mongoose.connection.db.dropDatabase();
+//   done();
+// });
