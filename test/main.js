@@ -8,6 +8,8 @@ import findOrCreate from '../lib/main';
 const { expect } = chai;
 const Schema = mongoose.Schema;
 
+mongoose.Promise = Promise;
+
 const testSchema = new Schema({
     name: { type: String },
 });
@@ -35,8 +37,7 @@ mongoose.connect('mongodb://82.196.14.126:27017/crypta');
 /* ------------------------------------------START TEST----------------------------------------- */
 describe('#findOrCreate()', () => {
 
-    before(done => {
-        console.log('pourquoi');
+    before((done) => {
         const grapefruit = new test({
             name: 'Grapefruit',
         });
@@ -44,7 +45,6 @@ describe('#findOrCreate()', () => {
     });
 
     it('the static method findOrCreate is added to models', () => {
-        expect(typeof test.findOrCreate).to.equal('function')
-    })
-
+        expect(typeof test.findOrCreate).to.equal('function');
+    });
 });
