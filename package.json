@@ -36,7 +36,9 @@
   "dependencies": {
     "assert": "^1.4.1",
     "bluebird": "^3.4.7",
-    "mongoose": "^4.8.1"
+    "chai": "^3.5.0",
+    "mongoose": "^4.8.1",
+    "ramda": "^0.23.0"
   },
   "devDependencies": {
     "babel-cli": "^6.18.0",

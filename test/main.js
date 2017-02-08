@@ -40,6 +40,7 @@ const Test = mongoose.model('test', testSchema);
 /* ------------------------------------------START TEST----------------------------------------- */
 describe('#findOrCreate()', () => {
     // before((done) => {
+        // mongoose.connection.db.dropDatabase();
     //     const test = new Test({
     //         name: 'test',
     //     });
