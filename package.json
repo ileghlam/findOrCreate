@@ -7,7 +7,7 @@
     "test": "test"
   },
   "scripts": {
-    "test": "NODE_ENV=testing mocha --require babel-core/register --reporter spec test/*.js"
+    "test": "mocha --compilers js:babel-core/register test/*.js --recursive"
   },
   "repository": {
     "type": "git",
@@ -37,6 +37,7 @@
     "assert": "^1.4.1",
     "bluebird": "^3.4.7",
     "chai": "^3.5.0",
+    "chai-as-promised": "^6.0.0",
     "mongoose": "^4.8.1",
     "ramda": "^0.23.0"
   },
@@ -45,15 +46,19 @@
     "babel-core": "^6.18.2",
     "babel-eslint": "^7.1.1",
     "babel-loader": "^6.2.8",
-    "babel-preset-latest": "^6.16.0",
+    "babel-preset-es2015": "^6.22.0",
     "babel-preset-react": "^6.16.0",
     "babel-preset-stage-0": "^6.16.0",
+    "dotenv": "^4.0.0",
     "eslint": "^3.11.1",
     "eslint-config-airbnb": "^12.0.0",
     "eslint-plugin-import": "^1.16.0",
     "eslint-plugin-jsx-a11y": "^2.2.3",
-    "chai": "^3.5.0",
-    "dotenv": "^4.0.0",
     "mocha": "^3.2.0"
+  },
+  "babel": {
+    "presets": [
+      "es2015"
+    ]
   }
 }
