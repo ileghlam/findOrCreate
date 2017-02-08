@@ -60,7 +60,7 @@ describe('#findOrCreate()', () => {
     it('should create a new elem in database', (done) => {
         Test.findOrCreate({ name: 'mango' })
             .then((doc) => {
-                doc.name.should.equal('mango1');
+                doc.name.should.equal('mango');
                 done(null);
             })
             .catch(err => {
