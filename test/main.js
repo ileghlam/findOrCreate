@@ -58,13 +58,6 @@ describe('#findOrCreate()', () => {
                 expect(mec.name).to.equal('mango');
             }).catch(console.error);
     });
-    //   it("should create the object if it doesn't exist", function(done) {
-    //     Test.findOrCreate({name: 'test'}, function(err, click) {
-    //     click.name.should.eql('test');
-
-    //     });
-    // });
-
 });
 
 /* ----------------------------------------Delete Database-------------------------------------- */
