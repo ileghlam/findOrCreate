@@ -1,26 +1,34 @@
-import chai from 'chai';
+const chai = require('chai');
+const mongoose = require('mongoose');
+const findOrCreate = require('../lib/main');
+const chaiAsPromised = require('chai-as-promised');
+
+chai.use(chaiAsPromised);
+
+chai.should();
+
 /* --------------------------------------------Require------------------------------------------ */
-import mongoose from 'mongoose';
-import findOrCreate from '../lib/main';
-
-const { it, describe } = global;
-
-
+const { it, describe, before, after } = global;
 
 /* --------------------------------------Connect to database------------------------------------ */
-mongoose.connect('mongodb://82.196.14.126:27017/crypta');
-mongoose.connection.on('connected', () => {
-    console.log('Mongoose default connection open to mongodb://82.196.14.126:27017/crypta');
-});
+before((done) => {
+    mongoose.connect('mongodb://82.196.14.126:27017/crypta');
+    mongoose.connection.on('connected', () => {
+        console.log('Mongoose default connection open to mongodb://82.196.14.126:27017/crypta');
+        done();
+    });
 
-// If the connection throws an error
-mongoose.connection.on('error', (err) => {
-    console.log(`Mongoose default connection error: ${err}`);
-});
+    // If the connection throws an error
+    mongoose.connection.on('error', (err) => {
+        console.log(`Mongoose default connection error: ${err}`);
+        done();
+    });
 
-// When the connection is disconnected
-mongoose.connection.on('disconnected', () => {
-    console.log('Mongoose default connection disconnected');
+    // When the connection is disconnected
+    mongoose.connection.on('disconnected', () => {
+        console.log('Mongoose default connection disconnected');
+        done();
+    });
 });
 
 /* --------------------------------------------Init Schema-------------------------------------- */
@@ -31,6 +39,9 @@ mongoose.Promise = Promise;
 
 const testSchema = new Schema({
     name: { type: String },
+    number: { type: Number },
+    parent: { type: String },
+    school: { type: Number },
 });
 
 testSchema.plugin(findOrCreate);
@@ -38,30 +49,28 @@ testSchema.plugin(findOrCreate);
 const Test = mongoose.model('test', testSchema);
 
 /* ------------------------------------------START TEST----------------------------------------- */
-describe('#findOrCreate()', () => {
-    // before((done) => {
-        // mongoose.connection.db.dropDatabase();
-    //     const test = new Test({
-    //         name: 'test',
-    //     });
-    //     test.save(err => done());
-    // });
 
+describe('#findOrCreate()', () => {
+    // test 1 -> Test if findOrCreate is function
     it('should add method findOrCreate to models', () => {
         expect(typeof Test.findOrCreate).to.equal('function');
     });
 
-    it('should create a new elem in database', () => {
+    // test 2 -> Create new elem
+    it('should create a new elem in database', (done) => {
         Test.findOrCreate({ name: 'mango' })
-            .then((mec) => {
-                console.log('4');
-                expect(mec.name).to.equal('mango');
-            }).catch(console.error);
+            .then((doc) => {
+                doc.name.should.equal('mango1');
+                done(null);
+            })
+            .catch(err => {
+                done(err);
+            });
     });
 });
 
 /* ----------------------------------------Delete Database-------------------------------------- */
-// after(done => {
-//   mongoose.connection.db.dropDatabase();
-//   done();
-// });
+after(done => {
+  mongoose.connection.db.dropDatabase();
+  done();
+});
