@@ -7,7 +7,7 @@
     "test": "test"
   },
   "scripts": {
-    "test": "mocha test/*.js"
+    "test": "NODE_ENV=testing mocha --require babel-core/register --reporter spec test/*.js"
   },
   "repository": {
     "type": "git",
@@ -34,9 +34,22 @@
     "node": "~0.6.14"
   },
   "dependencies": {
+    "assert": "^1.4.1",
+    "bluebird": "^3.4.7",
     "mongoose": "^4.8.1"
   },
   "devDependencies": {
+    "babel-cli": "^6.18.0",
+    "babel-core": "^6.18.2",
+    "babel-eslint": "^7.1.1",
+    "babel-loader": "^6.2.8",
+    "babel-preset-latest": "^6.16.0",
+    "babel-preset-react": "^6.16.0",
+    "babel-preset-stage-0": "^6.16.0",
+    "eslint": "^3.11.1",
+    "eslint-config-airbnb": "^12.0.0",
+    "eslint-plugin-import": "^1.16.0",
+    "eslint-plugin-jsx-a11y": "^2.2.3",
     "chai": "^3.5.0",
     "dotenv": "^4.0.0",
     "mocha": "^3.2.0"
