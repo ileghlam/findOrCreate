@@ -82,6 +82,7 @@ describe('#findOrCreate()', () => {
     it('should pass created as true if the object didn\'t exist', (done) => {
         Test.findOrCreate({ name: 'created' })
             .then((doc) => {
+                console.log(doc);
                 doc.created.should.equal(true);
                 done(null);
             })
