@@ -11,9 +11,9 @@ chai.should();
 
 /* --------------------------------------Connect to database------------------------------------ */
 before((done) => {
-    mongoose.connect('mongodb://82.196.14.126:27017/crypta');
+    mongoose.connect('mongodb://82.196.14.126:27017/Tests');
     mongoose.connection.on('connected', () => {
-        console.log('Mongoose default connection open to mongodb://82.196.14.126:27017/crypta');
+        console.log('Mongoose default connection open to Tests');
         done();
     });
 
@@ -41,6 +41,7 @@ const testSchema = new Schema({
     number: { type: Number },
     parent: { type: String },
     school: { type: Number },
+    // obj: { type: Object},
 });
 
 testSchema.plugin(findOrCreate);
@@ -104,6 +105,21 @@ describe('#findOrCreate()', () => {
             .catch(err => {
                 done(err);
             });
+    });
+
+    // Test 6
+    it('should not add properties with a $ when creating the object' , (done) => {
+        Test.findOrCreate({ 
+            name: 'exists',
+            test: { $exists: true },
+        }).then((doc) => {
+            expect(doc.obj.test).to.be.undefined;
+            doc.created.should.equal(true);
+            done(null);
+        })
+        .catch(err => {
+            done(err);
+        });
     });
 });
 
