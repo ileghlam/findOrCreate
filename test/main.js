@@ -1,14 +1,13 @@
+/* --------------------------------------------Require------------------------------------------ */
 const chai = require('chai');
 const mongoose = require('mongoose');
 const findOrCreate = require('../lib/main');
 const chaiAsPromised = require('chai-as-promised');
 
-chai.use(chaiAsPromised);
-
-chai.should();
-
-/* --------------------------------------------Require------------------------------------------ */
 const { it, describe, before, after } = global;
+
+chai.use(chaiAsPromised);
+chai.should();
 
 /* --------------------------------------Connect to database------------------------------------ */
 before((done) => {
@@ -51,12 +50,12 @@ const Test = mongoose.model('test', testSchema);
 /* ------------------------------------------START TEST----------------------------------------- */
 
 describe('#findOrCreate()', () => {
-    // test 1 -> Test if findOrCreate is function
+    // Test 1 -> Test if findOrCreate is function
     it('should add method findOrCreate to models', () => {
         expect(typeof Test.findOrCreate).to.equal('function');
     });
 
-    // test 2 -> Create new elem
+    // Test 2 -> Create new object
     it('should create a new elem in database', (done) => {
         Test.findOrCreate({ name: 'mango' })
             .then((doc) => {
@@ -67,6 +66,21 @@ describe('#findOrCreate()', () => {
                 done(err);
             });
     });
+
+    // Test 3 -> Test if findOrCreate find 'mango' elem
+    it('should find "mango" in database', (done) => {
+        Test.findOne({ name: 'mango'}, (err, doc) => {
+            if (err) done(err);
+            Test.findOrCreate({ name: 'mango' })
+                .then((find) => {
+                    find.name.should.equal(doc.name);
+                    done(null);
+                })
+                .catch(err => {
+                    done(err);
+                });
+        });
+    })
 });
 
 /* ----------------------------------------Delete Database-------------------------------------- */
