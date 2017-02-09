@@ -70,7 +70,7 @@ describe('#findOrCreate()', () => {
 });
 
 /* ----------------------------------------Delete Database-------------------------------------- */
-after(done => {
-  mongoose.connection.db.dropDatabase();
-  done();
-});
+// after(done => {
+//   mongoose.connection.db.dropDatabase();
+//   done();
+// });
