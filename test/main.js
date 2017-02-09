@@ -50,16 +50,16 @@ const Test = mongoose.model('test', testSchema);
 /* ------------------------------------------START TEST----------------------------------------- */
 
 describe('#findOrCreate()', () => {
-    // Test 1 -> Test if findOrCreate is function
+    // Test 1
     it('should add method findOrCreate to models', () => {
         expect(typeof Test.findOrCreate).to.equal('function');
     });
 
-    // Test 2 -> Create new object
+    // Test 2
     it('should create a new elem in database', (done) => {
         Test.findOrCreate({ name: 'mango' })
             .then((doc) => {
-                doc.name.should.equal('mango');
+                doc.obj.name.should.equal('mango');
                 done(null);
             })
             .catch(err => {
@@ -67,13 +67,13 @@ describe('#findOrCreate()', () => {
             });
     });
 
-    // Test 3 -> Test if findOrCreate find 'mango' elem
+    //Test 3
     it('should find "mango" in database', (done) => {
-        Test.findOne({ name: 'mango'}, (err, doc) => {
+        Test.findOne({ name: 'mango'}, (err, test) => {
             if (err) done(err);
             Test.findOrCreate({ name: 'mango' })
-                .then((find) => {
-                    find.name.should.equal(doc.name);
+                .then((doc) => {
+                    doc.obj.name.should.equal(test.name);
                     done(null);
                 })
                 .catch(err => {
@@ -81,6 +81,18 @@ describe('#findOrCreate()', () => {
                 });
         });
     })
+
+    // Test 4
+    it('should pass created as true if the object didn\'t exist', (done) => {
+        Test.findOrCreate({ name: 'created' })
+            .then((doc) => {
+                doc.created.should.equal(true);
+                done(null);
+            })
+            .catch(err => {
+                done(err);
+            });
+    });
 });
 
 /* ----------------------------------------Delete Database-------------------------------------- */
