@@ -56,26 +56,17 @@ describe('#findOrCreate()', () => {
     });
 
     // Test 2
-    it('should create a new elem in database', (done) => {
+    it('should create a new document in database', (done) => {
         Test.findOrCreate({ name: 'mango' })
             .then((doc) => {
                 doc.obj.name.should.equal('mango');
                 done(null);
             })
-            .catch(err => done(err));
+            .catch(done);
     });
 
     // Test 3
     it('should find "mango" in database', (done) => {
-
-        Test.findOne({ name: 'mango' })
-            .then(test => {
-                Test.findOrCreate({ name: 'mango' })
-            })
-            .catch(error => done(error));
-
-
-
         Test.findOne({ name: 'mango' }, (err, test) => {
             if (err) done(err);
             Test.findOrCreate({ name: 'mango' })
@@ -94,7 +85,7 @@ describe('#findOrCreate()', () => {
                 doc.created.should.equal(true);
                 done(null);
             })
-            .catch(err => done(err));
+            .catch(done);
     });
 
     // Test 5
@@ -104,7 +95,7 @@ describe('#findOrCreate()', () => {
                 doc.created.should.equal(false);
                 done(null);
             })
-            .catch(err => done(err));
+            .catch(done);
     });
 
     // // Test 6
@@ -113,15 +104,15 @@ describe('#findOrCreate()', () => {
             name: 'exists',
             test: { $exists: true },
         }).then((doc) => {
-            expect(doc.obj.test).to.be.undefined;
+            expect(doc.obj.test).to.equal(undefined);
             doc.created.should.equal(true);
             done(null);
         })
-        .catch(err => done(err));
+        .catch(done);
     });
 
     // Test 7
-    it('should create a new elem in database with data', (done) => {
+    it('should create a new document in database with data', (done) => {
         Test.findOrCreate({ name: 'merco' }, {
             number: 12,
             parent: 'valide',
@@ -131,7 +122,7 @@ describe('#findOrCreate()', () => {
             doc.created.should.equal(true);
             done(null);
         })
-        .catch(err => done(err));
+        .catch(done);
     });
 
     // Test 8
@@ -142,10 +133,38 @@ describe('#findOrCreate()', () => {
             doc.obj.school.should.equal(24);
             done(null);
         })
-        .catch(err => done(err));
+        .catch(done);
+    });
+
+    // Test 9
+    it('should create new document with upsert', (done) => {
+        Test.findOrCreate({ name: 'bmw' }, { school: 420 }, { upsert: true })
+        .then((doc) => {
+            doc.created.should.equal(true);
+            doc.obj.school.should.equal(420);
+            done(null);
+        })
+        .catch(done);
+    });
+
+    // Test 10
+    it('should delete all documents and create new document', (done) => {
+        Promise.all([
+            Test.remove({ name: 'bmw' }),
+            Test.remove({ name: 'merco' }),
+            Test.remove({ name: 'exists' }),
+            Test.remove({ name: 'mango' }),
+            Test.remove({ name: 'created' }),
+            Test.findOrCreate({ name: 'mangoose' }),
+        ])
+        .then((tab) => {
+            const doc = tab.pop();
+            doc.created.should.equal(true);
+            done(null);
+        })
+        .catch(done);
     });
 });
-
 /* ----------------------------------------Delete Database-------------------------------------- */
 after(done => {
   mongoose.connection.db.dropDatabase();
