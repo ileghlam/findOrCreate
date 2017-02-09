@@ -2,7 +2,6 @@
 const chai = require('chai');
 const mongoose = require('mongoose');
 const chaiAsPromised = require('chai-as-promised');
-const assert = require('assert');
 const findOrCreate = require('../lib/main');
 
 const { it, describe, before, after } = global;
@@ -66,20 +65,29 @@ describe('#findOrCreate()', () => {
             .catch(err => done(err));
     });
 
-    //Test 3
+    // Test 3
     it('should find "mango" in database', (done) => {
-        Test.findOne({ name: 'mango'}, (err, test) => {
+
+        Test.findOne({ name: 'mango' })
+            .then(test => {
+                Test.findOrCreate({ name: 'mango' })
+            })
+            .catch(error => done(error));
+
+
+
+        Test.findOne({ name: 'mango' }, (err, test) => {
             if (err) done(err);
             Test.findOrCreate({ name: 'mango' })
                 .then((doc) => {
                     doc.obj.name.should.equal(test.name);
                     done(null);
                 })
-                .catch(err => done(err));
+                .catch(error => done(error));
         });
-    })
+    });
 
-    // // Test 4
+    // Test 4
     it('should pass created as true if the object didn\'t exist', (done) => {
         Test.findOrCreate({ name: 'created' })
             .then((doc) => {
@@ -89,7 +97,7 @@ describe('#findOrCreate()', () => {
             .catch(err => done(err));
     });
 
-    // // Test 5
+    // Test 5
     it('should pass created as false if the object already exists', (done) => {
         Test.findOrCreate({ name: 'created' })
             .then((doc) => {
@@ -100,8 +108,8 @@ describe('#findOrCreate()', () => {
     });
 
     // // Test 6
-    it('should not add properties with a $ when creating the object' , (done) => {
-        Test.findOrCreate({ 
+    it('should not add properties with a $ when creating the object', (done) => {
+        Test.findOrCreate({
             name: 'exists',
             test: { $exists: true },
         }).then((doc) => {
@@ -112,7 +120,7 @@ describe('#findOrCreate()', () => {
         .catch(err => done(err));
     });
 
-    // // Test 7
+    // Test 7
     it('should create a new elem in database with data', (done) => {
         Test.findOrCreate({ name: 'merco' }, {
             number: 12,
@@ -126,18 +134,12 @@ describe('#findOrCreate()', () => {
         .catch(err => done(err));
     });
 
-    // // Test 8
+    // Test 8
     it('should update merco with upsert', (done) => {
-        Test.findOrCreate({ name: 'merco' },
-        {
-            school: '24',
-        },
-        {
-            upsert: true,
-        })
+        Test.findOrCreate({ name: 'merco' }, { school: 24 }, { upsert: true })
         .then((doc) => {
             doc.created.should.equal(false);
-            doc.obj.school.should.equal(24);            
+            doc.obj.school.should.equal(24);
             done(null);
         })
         .catch(err => done(err));
