@@ -1,8 +1,9 @@
 /* --------------------------------------------Require------------------------------------------ */
 const chai = require('chai');
 const mongoose = require('mongoose');
-const findOrCreate = require('../lib/main');
 const chaiAsPromised = require('chai-as-promised');
+const assert = require('assert');
+const findOrCreate = require('../lib/main');
 
 const { it, describe, before, after } = global;
 
@@ -41,7 +42,6 @@ const testSchema = new Schema({
     number: { type: Number },
     parent: { type: String },
     school: { type: Number },
-    // obj: { type: Object},
 });
 
 testSchema.plugin(findOrCreate);
@@ -63,9 +63,7 @@ describe('#findOrCreate()', () => {
                 doc.obj.name.should.equal('mango');
                 done(null);
             })
-            .catch(err => {
-                done(err);
-            });
+            .catch(err => done(err));
     });
 
     //Test 3
@@ -77,9 +75,7 @@ describe('#findOrCreate()', () => {
                     doc.obj.name.should.equal(test.name);
                     done(null);
                 })
-                .catch(err => {
-                    done(err);
-                });
+                .catch(err => done(err));
         });
     })
 
@@ -90,9 +86,7 @@ describe('#findOrCreate()', () => {
                 doc.created.should.equal(true);
                 done(null);
             })
-            .catch(err => {
-                done(err);
-            });
+            .catch(err => done(err));
     });
 
     // Test 5
@@ -102,9 +96,7 @@ describe('#findOrCreate()', () => {
                 doc.created.should.equal(false);
                 done(null);
             })
-            .catch(err => {
-                done(err);
-            });
+            .catch(err => done(err));
     });
 
     // Test 6
@@ -117,9 +109,21 @@ describe('#findOrCreate()', () => {
             doc.created.should.equal(true);
             done(null);
         })
-        .catch(err => {
-            done(err);
-        });
+        .catch(err => done(err));
+    });
+
+    // Test 7
+    it('should create a new elem in database with data', (done) => {
+        Test.findOrCreate({ name: 'merco' }, {
+            number: 12,
+            parent: 'valide',
+            school: '42',
+        })
+        .then((doc) => {
+            doc.created.should.equal(true);
+            done(null);
+        })
+        .catch(err => done(err));
     });
 });
 
