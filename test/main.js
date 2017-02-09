@@ -93,6 +93,18 @@ describe('#findOrCreate()', () => {
                 done(err);
             });
     });
+
+    // Test 5
+    it('should pass created as false if the object already exists', (done) => {
+        Test.findOrCreate({ name: 'created' })
+            .then((doc) => {
+                doc.created.should.equal(false);
+                done(null);
+            })
+            .catch(err => {
+                done(err);
+            });
+    });
 });
 
 /* ----------------------------------------Delete Database-------------------------------------- */
