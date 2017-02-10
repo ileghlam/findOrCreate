@@ -12,8 +12,8 @@ Useful mongoose plugin "findOrCreate-Promise", which was made using es6 Promises
 npm i findorcreate-promise
 ```
 
+## Import plugin
 
-Import the plugin "findOrCreate-Promise".
 
 ```javascript
 const import findOrCreate from 'findorcreate-promise';
@@ -29,6 +29,7 @@ const Schema = mongoose.Schema;
 
 const TestSchema = new Schema({
     name: { type: String },
+    password: { type: String },
 });
 
 TestSchema.plugin(findOrCreate);
@@ -38,47 +39,65 @@ const Test = mongoose.model('Test', TestSchema);
 
 ## Usage
 
-### Create a new document
+### Basic Usage
 
-You can create a new document. The return value is a object
+findOrCreate takes at most three arguments.
+
+* `search` : The values to be searched
+* `newValues` : If a document is created, these values will be defined.
+* `options`: Decides different behavior in the vent an object is found or created.
+
+The function returns in all cases the object in question, whether it was found or created, and a boolean.
+The boolean is true if it created a new document and false if it found and or updated one.
 
 ```javascript
-Test.findOrCreate({ name: 'mongoose' })
+Schema.findOrCreate({ search }, { newValues }, { options })
     .then((doc) => {
-        // doc.result contain the document.
-        console.log(doc.result);
-        // If the document are created, doc.created has at true.
-        console.log(doc.created);
+        // Return :
+        // doc.created (Boolean);
+        // doc.result (Object);
     })
     .catch(done);
 ```
 
-### Find a document
+### Create or Find a new document
 
-You can create a new document. The return value is a object
+You can create a new document by searching for values. If a matching document is found, it is returned.
+Otherwise a new document with the searched values is created and returned.
 
 ```javascript
 Test.findOrCreate({ name: 'mongoose' })
     .then((doc) => {
-        // doc.result contain the document.
-        console.log(doc.result);
-        // If the document are created, doc.created has at true.
-        console.log(doc.created);
+        // doc.created = true;
+        // doc.result = new document;
+    })
+    .catch(done);
+```
+
+You can create a new document by searching values and in the second parameter, define values in the
+new document.
+
+
+```javascript
+Test.findOrCreate({ name: 'mongoose' }, { password: 'nosql' })
+    .then((doc) => {
+        // doc.created = true;
+        // doc.result = new document;
     })
     .catch(done);
 ```
 
 ### Update a document
 
-You can create a new document. The return value is a object
+
+The option `upsert` dictates how to handle found objects. If it is true, the values passed in `newValues`
+are updated in the object. By default it's false.
 
 ```javascript
-Test.findOrCreate({ name: 'mongoose' })
+Test.findOrCreate({ name: 'mongoose' }, { name: 'mongoDB' }, { upsert: true })
     .then((doc) => {
-        // doc.result contain the document.
-        console.log(doc.result);
-        // If the document are created, doc.created has at true.
-        console.log(doc.created);
+        // doc.created = false;
+        // doc.result = document update;
     })
     .catch(done);
 ```
@@ -98,18 +117,17 @@ Test.findOrCreate({ name: 'mongoose' })
 * [mocha](https://github.com/mochajs/mocha)
 * [mongoose](https://github.com/Automattic/mongoose)
 
-
-## BUGS
-
-When you find issues, please report them:
-
-* web: [https://github.com/ileghlam/findOrCreate/issues](https://github.com/ileghlam/findOrCreate/issues)
-
 ## Test
 
 ```
 npm test
 ```
+
+## Bugs
+
+When you find issues, please report them:
+
+* web: [https://github.com/ileghlam/findOrCreate/issues](https://github.com/ileghlam/findOrCreate/issues)
 
 ## License
 
