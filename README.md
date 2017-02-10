@@ -9,7 +9,7 @@ Useful mongoose plugin "findOrCreate-Promise", which was made using es6 Promises
 ## Installation
 
 ```
-npm i findOrCreate-Promise
+npm i findorcreate-promise
 ```
 
 
