@@ -74,7 +74,7 @@ describe('#findOrCreate()', () => {
                     doc.obj.name.should.equal(test.name);
                     done(null);
                 })
-                .catch(error => done(error));
+                .catch(done);
         });
     });
 

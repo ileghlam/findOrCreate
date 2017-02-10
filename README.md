@@ -97,8 +97,13 @@ Test.findOrCreate({ name: 'mongoose' })
 When you find issues, please report them:
 
 * web: [https://github.com/ileghlam/findOrCreate/issues](https://github.com/ileghlam/findOrCreate/issues)
-* web:
-  <https://github.com/ileghlam/findOrCreate/issues>
+
+## Test
+
+```
+npm test
+```
+
 ## License
 
 * __MIT__: [http://opensource.org/licenses/MIT](http://opensource.org/licenses/MIT)
