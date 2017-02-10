@@ -1,8 +1,8 @@
 # findOrCreate-Promise
 
 [![Build Status](https://travis-ci.org/travis-ci/travis-web.svg?branch=master)](https://travis-ci.org/travis-ci/travis-web)
-![npm](https://img.shields.io/npm/v/findorcreate-promise.svg) ![license](https://img.shields.io/npm/l/findorcreate-promise.svg)
-
+![npm](https://img.shields.io/npm/v/findorcreate-promise.svg)
+![license](https://img.shields.io/npm/l/findorcreate-promise.svg)
 
 Useful mongoose plugin "findOrCreate-Promise", which was made using es6 Promises.
 
