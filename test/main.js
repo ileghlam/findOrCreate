@@ -59,7 +59,7 @@ describe('#findOrCreate()', () => {
     it('should create a new document in database', (done) => {
         Test.findOrCreate({ name: 'mango' })
             .then((doc) => {
-                doc.obj.name.should.equal('mango');
+                doc.result.name.should.equal('mango');
                 done(null);
             })
             .catch(done);
@@ -71,10 +71,10 @@ describe('#findOrCreate()', () => {
             if (err) done(err);
             Test.findOrCreate({ name: 'mango' })
                 .then((doc) => {
-                    doc.obj.name.should.equal(test.name);
+                    doc.result.name.should.equal(test.name);
                     done(null);
                 })
-                .catch(done);
+                .catch(error => done(error));
         });
     });
 
@@ -104,7 +104,7 @@ describe('#findOrCreate()', () => {
             name: 'exists',
             test: { $exists: true },
         }).then((doc) => {
-            expect(doc.obj.test).to.equal(undefined);
+            expect(doc.result.test).to.equal(undefined);
             doc.created.should.equal(true);
             done(null);
         })
@@ -130,7 +130,7 @@ describe('#findOrCreate()', () => {
         Test.findOrCreate({ name: 'merco' }, { school: 24 }, { upsert: true })
         .then((doc) => {
             doc.created.should.equal(false);
-            doc.obj.school.should.equal(24);
+            doc.result.school.should.equal(24);
             done(null);
         })
         .catch(done);
@@ -141,7 +141,7 @@ describe('#findOrCreate()', () => {
         Test.findOrCreate({ name: 'bmw' }, { school: 420 }, { upsert: true })
         .then((doc) => {
             doc.created.should.equal(true);
-            doc.obj.school.should.equal(420);
+            doc.result.school.should.equal(420);
             done(null);
         })
         .catch(done);
