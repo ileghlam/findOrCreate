@@ -1,8 +1,8 @@
 # findOrCreate-Promise
 
 [![Build Status](https://travis-ci.org/travis-ci/travis-web.svg?branch=master)](https://travis-ci.org/travis-ci/travis-web)
-![npm](https://img.shields.io/npm/v/findorcreate-promise.svg) ![license](https://img.shields.io/npm/l/findorcreate-promise.svg) ![github-issues](https://img.shields.io/github/issues/revolunet/findorcreate-promise.svg)  
-![Circle CI build status](https://circleci.com/gh/revolunet/findorcreate-promise.svg?style=svg)
+![npm](https://img.shields.io/npm/v/findorcreate-promise.svg) ![license](https://img.shields.io/npm/l/findorcreate-promise.svg)
+
 
 Useful mongoose plugin "findOrCreate-Promise", which was made using es6 Promises.
 
