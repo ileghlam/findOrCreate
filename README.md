@@ -43,19 +43,20 @@ const Test = mongoose.model('Test', TestSchema);
 
 findOrCreate takes at most three arguments.
 
-* `search` : The values to be searched
-* `newValues` : If a document is created, these values will be defined.
+* `query` : The values to be searched
+* `data` : If a document is created, these values will be defined.
 * `options`: Decides different behavior in the vent an object is found or created.
 
 The function returns in all cases the object in question, whether it was found or created, and a boolean.
 The boolean is true if it created a new document and false if it found and or updated one.
 
 ```javascript
-Schema.findOrCreate({ search }, { newValues }, { options })
+Schema.findOrCreate({ query }, { data }, { options })
     .then((doc) => {
-        // Return :
-        // doc.created (Boolean);
-        // doc.result (Object);
+       /**
+        * doc.created is a boolean
+        * doc.result is an object
+        **/
     })
     .catch(done);
 ```
@@ -68,8 +69,10 @@ Otherwise a new document with the searched values is created and returned.
 ```javascript
 Test.findOrCreate({ name: 'mongoose' })
     .then((doc) => {
-        // doc.created = true;
-        // doc.result = new document;
+       /**
+        * doc.created = true
+        * doc.result = new document
+        **/
     })
     .catch(done);
 ```
@@ -81,8 +84,10 @@ new document.
 ```javascript
 Test.findOrCreate({ name: 'mongoose' }, { password: 'nosql' })
     .then((doc) => {
-        // doc.created = true;
-        // doc.result = new document;
+       /**
+        * doc.created = true
+        * doc.result = new document
+        **/
     })
     .catch(done);
 ```
@@ -90,18 +95,35 @@ Test.findOrCreate({ name: 'mongoose' }, { password: 'nosql' })
 ### Update a document
 
 
-The option `upsert` dictates how to handle found objects. If it is true, the values passed in `newValues`
+The option `upsert` dictates how to handle found objects. If it is true, the values passed in `data`
 are updated in the object. By default it's false.
 
 ```javascript
 Test.findOrCreate({ name: 'mongoose' }, { name: 'mongoDB' }, { upsert: true })
     .then((doc) => {
-        // doc.created = false;
-        // doc.result = document update;
+       /**
+        * doc.created = false
+        * doc.result = document update
+        **/
     })
     .catch(done);
 ```
 
+### Create option
+
+The option `create` dictates how to handle found objects. The default value is true, but if the value is true and
+any document founds, new document created.
+
+```javascript
+Test.findOrCreate({ name: 'mongoose' }, {}, { create: false })
+    .then((doc) => {
+       /**
+        * doc.created = false
+        * doc.result = null
+        **/
+    })
+    .catch(done);
+```
 
 ## Dev Dependencies
 
