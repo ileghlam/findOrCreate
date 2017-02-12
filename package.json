@@ -1,6 +1,6 @@
 {
   "name": "findorcreate-promise",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Useful plugin \"findOrCreate\" for Mongoose, which was coded in ES6.",
   "main": "lib/main.js",
   "directories": {
