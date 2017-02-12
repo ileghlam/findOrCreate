@@ -1,15 +1,18 @@
-/* --------------------------------------------Require------------------------------------------ */
+// Require package
 const chai = require('chai');
 const mongoose = require('mongoose');
 const chaiAsPromised = require('chai-as-promised');
 const findOrCreate = require('../lib/main');
 
+// Global variables
 const { it, describe, before, after } = global;
 
+// Extends Chai with assertions about promises
 chai.use(chaiAsPromised);
 chai.should();
+const { expect } = chai;
 
-/* --------------------------------------Connect to database------------------------------------ */
+// Connect to database
 before((done) => {
     mongoose.connect('mongodb://82.196.14.126:27017/Tests');
     mongoose.connection.on('connected', () => {
@@ -30,8 +33,7 @@ before((done) => {
     });
 });
 
-/* --------------------------------------------Init Schema-------------------------------------- */
-const { expect } = chai;
+// Init Schema
 const Schema = mongoose.Schema;
 
 mongoose.Promise = Promise;
@@ -44,10 +46,12 @@ const testSchema = new Schema({
 });
 
 testSchema.plugin(findOrCreate);
-
 const Test = mongoose.model('test', testSchema);
 
-/* ------------------------------------------START TEST----------------------------------------- */
+/**
+ * Start Test
+ * 27 tests
+ */
 
 describe('#findOrCreate()', () => {
     // Test 1
@@ -453,7 +457,8 @@ describe('#findOrCreate()', () => {
         .catch(done);
     });
 });
-/* ----------------------------------------Delete Database-------------------------------------- */
+
+// Delete Database
 after(done => {
   mongoose.connection.db.dropDatabase();
   done();
