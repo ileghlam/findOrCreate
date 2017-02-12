@@ -111,8 +111,8 @@ Test.findOrCreate({ name: 'mongoose' }, { name: 'mongoDB' }, { upsert: true })
 
 ### Create option
 
-The option `create` dictates how to handle found objects. The default value is true, but if the value is true and
-any document founds, new document created.
+An object is created by default if it is not found. However, if `create` is set to false, the function performs only
+a find and no new object will be created.
 
 ```javascript
 Test.findOrCreate({ name: 'mongoose' }, {}, { create: false })
